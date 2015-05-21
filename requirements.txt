@@ -3,6 +3,7 @@ Flask==0.10.1
 requests==2.2.1
 redis==2.9.1
 rethinkdb==2.0.0-1
+rq
 nose==1.3.0
 gevent==1.0.1
 gunicorn==19.0.0
