@@ -1,7 +1,16 @@
 __author__ = 'at'
 
+from app import AfricasTalkingGateway, AfricasTalkingGatewayException
+from app import settings
+from app import logging
 from urllib import urlencode
 import requests
+
+# redis queue
+from rq.decorators import job
+from redis import Redis
+
+redis_conn = Redis()
 
 
 class FetchUrl(object):
@@ -61,3 +70,12 @@ class MakeRequests(object):
             headers = {'apikey': self.apikey}
             r = requests.get(self.url, headers=headers)
             return r
+
+
+@job('high', connection=redis_conn, timeout=5)
+def consume_call(from_, to):
+    api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
+    try:
+        api.call(from_, to)
+    except AfricasTalkingGatewayException:
+        logging.warning("call init failed")

@@ -4,6 +4,9 @@ from flask import (abort, request, make_response, jsonify)
 from app import r
 from app import g
 from app import RqlError
+from app import settings
+
+from _utils import consume_call
 
 
 @app.route('/api/ussd/callback/', methods=['POST'])
@@ -17,6 +20,12 @@ def ussd_callback():
         service_code = request.args.get("serviceCode")
         phone_number = request.args.get("phoneNumber")
         text = request.args.get("text")
+
+        menu_text = """CON Africa's-Talking Show and Tell Demo \n
+        - You're  registered we'll call you and ask you a few questions\n
+        - You stand a chance to win airtime \n
+        END
+        """
 
         if request.args.get('text') is '':
             # load menu
@@ -32,9 +41,31 @@ def ussd_callback():
             return resp
 
         try:
-            tasks = r.table('User').insert({'phoneNumber': phone_number, 'serviceCode': service_code,
-                                            'sessionId': session_id, 'text': text}).run(g.rdb_conn)
-            # push to queue
+            user = r.table('User').get(phone_number).run(g.rdb_conn)
+
+            # no user found so save
+            if user is not None:
+                r.table('User').insert({'phoneNumber': phone_number, 'serviceCode': service_code,
+                                        'sessionId': session_id, 'text': text}).run(g.rdb_conn)
+
+                # make call
+                consume_call(settings.from_, phone_number)
+
+                resp = make_response(menu_text, 200)
+                resp.headers['Content-Type'] = "text/plain"
+                resp.cache_control.no_cache = True
+                return resp
+            else:
+                # user found - can't play
+                toast = """CON Africa's-Talking Show and Tell Demo \n
+                - Sorry you can only play Once \n
+                END
+                """
+                resp = make_response(toast, 200)
+                resp.headers['Content-Type'] = "text/plain"
+                resp.cache_control.no_cache = True
+                return resp
+
         except RqlError:
             logging.warning('DB code verify failed on /api/ussd/ - > callback')
 
@@ -42,11 +73,6 @@ def ussd_callback():
             resp.headers['Content-Type'] = "application/json"
             resp.cache_control.no_cache = True
             return resp
-
-        resp = make_response(tasks, 200)
-        resp.headers['Content-Type'] = "application/json"
-        resp.cache_control.no_cache = True
-        return resp
 
 
 def display_menu():

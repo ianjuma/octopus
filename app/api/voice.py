@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from app import (app, logging)
+from app import AfricasTalkingGateway, AfricasTalkingGatewayException
 from flask import (make_response, abort, request, jsonify)
 
 # globals
@@ -16,38 +17,31 @@ def voice_callback():
         if request.headers['Content-Type'] != 'text/plain':
             abort(400)
 
-        # Reads the variables sent via POST from our gateway
-        session_id = request.args.get("sessionId")
-        service_code = request.args.get("serviceCode")
-        phone_number = request.args.get("phoneNumber")
-        text = request.args.get("text")
+        is_active = request.args.get('isActive')
+        session_id = request.args.get('sessionId')
 
-        if request.args.get('text') is '':
-            # load menu
-            menu_text = """CON Africa's-Talking Show and Tell Demo \n
-            - You're  registered we'll call you and ask you a few questions\n
-            - You stand a chance to win airtime \n
-            END
-            """
+        if is_active is 1:
+            # Compose the response
+            response = '<?xml version="1.0" encoding="UTF-8"?>'
+            response += '<Response>'
+            response += '<GetDigits timeout="20" finishOnKey="#">'
+            response += '<Say>How many people are in the room? end with hash sign</Say>'
+            response += '</GetDigits>'
+            response += '<Say>We did not get your answer. Good bye</Say>'
+            response += '</Response>'
 
-            resp = make_response(menu_text, 200)
-            resp.headers['Content-Type'] = "text/plain"
+            resp = make_response(response, 200)
+            resp.headers['Content-Type'] = "application/xml"
             resp.cache_control.no_cache = True
             return resp
 
-        try:
-            tasks = r.table('User').insert({'phoneNumber': phone_number, 'serviceCode': service_code,
-                                            'sessionId': session_id, 'text': text}).run(g.rdb_conn)
-            # push to queue
-        except RqlError:
-            logging.warning('DB code verify failed on /api/ussd/ - > callback')
-
-            resp = make_response(jsonify({"Error": "503 DB error"}), 503)
-            resp.headers['Content-Type'] = "application/json"
+        else:
+            response = '<?xml version="1.0" encoding="UTF-8"?>'
+            response += '<Response>'
+            response += '<Say>Sorry</Say>'
+            response += '<Say>We did not get your answer. Good bye</Say>'
+            response += '</Response>'
+            resp = make_response(response, 200)
+            resp.headers['Content-Type'] = "application/xml"
             resp.cache_control.no_cache = True
             return resp
-
-        resp = make_response(tasks, 200)
-        resp.headers['Content-Type'] = "application/json"
-        resp.cache_control.no_cache = True
-        return resp

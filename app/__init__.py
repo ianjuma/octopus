@@ -8,7 +8,7 @@ from flask import abort
 import rethinkdb as r
 from rethinkdb import (RqlRuntimeError, RqlDriverError, RqlError)
 
-from AfricasTalkingGateway import (
+from lib.AfricasTalkingGateway import (
     AfricasTalkingGateway, AfricasTalkingGatewayException)
 from datetime import timedelta
 
