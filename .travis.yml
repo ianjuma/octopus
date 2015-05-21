@@ -1,0 +1,35 @@
+language: python
+
+before_install:
+  - echo "START"
+  - pip install -r requirements.txt
+
+before_script:
+  - chmod +x runserver.py
+
+install: python runserver.py
+
+compiler:
+  - python2.7
+
+script: "./runserver.py"
+
+
+# blacklist
+branches:
+  except:
+    - legacy
+    - experimental
+
+# whitelist
+branches:
+  only:
+    - master
+    - stable
+
+notifications:
+  email:
+    - wjuma@students.usiu.ac.ke
+  on_success: change
+  on_failure: always
+

@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">Enter User Details</div>
+    <div class="panel-body">
+      <form class="form" method="post" ng-submit="addUser()" name="addForm">
+        <div class="form-group" ng-class="{ 'has-error' : addForm.name.$invalid && addForm.name.$dirty }">
+          <label class="control-label">Name</label>
+          <input class="form-control" type="text" name="name" ng-model="name" placeholder="Enter username" required autofocus>
+          <label class="control-label">Age</label>
+          <input class="form-control" type="number" name="age" ng-model="age" placeholder="Enter age" required autofocus>
+          <label class="control-label">ID</label>
+          <input class="form-control" type="number" name="id" ng-model="id" placeholder="Enter ID" required autofocus>
+          <div class="help-block text-danger" ng-if="addForm.name.$dirty" ng-messages="addForm.name.$error">
+            <div ng-message="required">Username is required.</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit" ng-disabled="addForm.$invalid">Add</button>
+      </form>
+    </div>
+  </div>
+</div>

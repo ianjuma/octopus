@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">Get by Username</div>
+        <div class="panel-body">
+            <form class="form" method="post" ng-submit="addUSSD()" name="addForm">
+                <div class="form-group" ng-class="{ 'has-error' : addForm.username.$invalid && addForm.username.$dirty }">
+                    <label class="control-label">Username</label>
+                    <input class="form-control" type="text" name="username" ng-model="username" placeholder="Enter username" required autofocus>
+                    <label class="control-label">Metric</label>
+                    <input class="form-control" type="text" name="metric" ng-model="metric" placeholder="Enter metric" required autofocus>
+                    <label class="control-label">Start date</label>
+                    <input class="form-control" type="date" name="startDate" ng-model="startDate" placeholder="start Date" required autofocus>
+                    <label class="control-label">End date</label>
+                    <input class="form-control" type="date" name="endDate" ng-model="endDate" placeholder="end Date" required autofocus>
+                    <label class="control-label">Granularity</label>
+                    <input class="form-control" type="text" name="granularity" ng-model="granularity" placeholder="Granularity" required autofocus>
+                    <div class="help-block text-danger" ng-if="addForm.username.$dirty" ng-messages="addForm.username.$error">
+                        <div ng-message="required">Username is required.</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit" ng-disabled="addForm.$invalid">Send</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="metricSlice">
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <title>Metric &acd; slice</title>
+  <link href="static/assets/favicon.png" rel="icon" type="image/png">
+  <link href='http://fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+  <link href="//cdn.jsdelivr.net/ionicons/1.4.1/css/ionicons.min.css" rel="stylesheet">
+  <link href="static/assets/stylesheets/animate.css" rel="stylesheet">
+  <link href="static/assets/stylesheets/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar>
+  <div class="navbar-header">
+    <a class="navbar-brand" href="/">
+      <span>Metric<strong> &angzarr; slice</strong></span>
+    </a>
+  </div>
+  <ul class="nav navbar-nav">
+    <li data-match-route="/$"><a href="/">Home</a></li>
+    <li data-match-route="/detail"><a href="#/detail">Details</a></li>
+  </ul>
+  <ul class="nav navbar-nav pull-right">
+    <li data-match-route="/ussd"><a href="#/ussd">USSD</a></li>
+    <li data-match-route="/main"><a href="#/main">Credits</a></li>
+  </ul>
+</div>
+
+<!--current view placeholder-->
+<div ng-view class="{{pageClass}}"></div>
+
+<script src="static/assets/vendor/angular.js"></script>
+<script src="static/assets/vendor/angular-strap.js"></script>
+<script src="static/assets/vendor/angular-strap.tpl.js"></script>
+<script src="static/assets/vendor/angular-messages.js"></script>
+<script src="static/assets/vendor/angular-resource.js"></script>
+<script src="static/assets/vendor/angular-route.js"></script>
+<script src="static/assets/vendor/angular-animate.js"></script>
+<script src="static/assets/vendor/moment.min.js"></script>
+
+<script src="static/app.js"></script>
+<script src="static/controllers/add.js"></script>
+<script src="static/controllers/detail.js"></script>
+<script src="static/controllers/main.js"></script>
+<script src="static/controllers/ussd.js"></script>
+<script src="static/services/user.js"></script>
+<script src="static/services/ussd.js"></script>
+
+</body>
+</html>

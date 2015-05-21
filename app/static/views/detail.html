@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">User Details</div>
+        <div class="panel-body">
+            <ul>
+                <li ng-repeat="user in User">
+                    {{user.name | uppercase }} - {{user.age}} - {{user.id}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
