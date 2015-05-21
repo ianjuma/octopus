@@ -119,3 +119,11 @@ class MakeRequests(object):
             headers = {'apikey': self.apikey}
             r = requests.get(self.url, headers=headers)
             return r
+
+
+def make_call():
+    pass
+
+
+def send_text():
+    pass

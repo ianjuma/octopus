@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from app import (app, logging, settings)
-from flask import (make_response, abort, request)
+from flask import (make_response, abort, request, jsonify)
 from json import dumps
 from _utils import (FetchUrl, MakeRequests)
 
