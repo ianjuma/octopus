@@ -20,7 +20,7 @@ redis_broker = 'redis://localhost:6379/0'
 # api key
 api_key = '733ed38f63b039090a0001dbbc2dd416187f054d53650d0fd7c0b834a293a30d'
 username = 'IanJuma'
-_from = '+254711082306'
+from_ = '+254711082306'
 
 
 # rethink
