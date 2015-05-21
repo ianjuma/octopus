@@ -5,11 +5,6 @@ from app import (app, logging)
 from flask import (render_template, make_response)
 
 
-@app.before_request
-def log():
-    logging.info('Processing request')
-
-
 @app.route('/', methods=['GET'])
 def index():
     """
@@ -19,7 +14,6 @@ def index():
     # join to another table
     try:
         resp = make_response(render_template('index.html'))
-        assert isinstance(resp, object)
         resp.cache_control.no_cache = True
         return resp
     except Exception, e:
