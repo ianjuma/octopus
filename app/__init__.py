@@ -35,6 +35,8 @@ def db_setup():
         r.db_create(settings.TARGET_DB).run(connection)
         r.db(settings.TARGET_DB).table_create('User').run(connection)
         logging.info('Database setup completed')
+    except RqlError:
+        logging.info('App database already exists')
     except RqlRuntimeError:
         logging.info('App database already exists')
     finally:
@@ -54,12 +56,13 @@ def before_request():
 
 
 @app.teardown_request
-def teardown_request():
+def teardown_request(exception):
     try:
         logging.info('teardown_request')
         g.rdb_conn.close()
     except AttributeError:
-        logging.info('Database failure - check your connection')
+        logging.info('Database failure - check your connection', exception)
+
 
 from api import routes
-from api import resource
+from api import voice

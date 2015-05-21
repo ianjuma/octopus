@@ -1,13 +1,17 @@
-from app import (app, logging)
-from flask import (abort, request, make_response, jsonify)
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 
+from app import (app, logging)
+from flask import (make_response, abort, request, jsonify)
+
+# globals
 from app import r
 from app import g
 from app import RqlError
 
 
-@app.route('/api/ussd/callback/', methods=['POST'])
-def ussd_callback():
+@app.route('/api/voice/callback/', methods=['POST'])
+def voice_callback():
     if request.method is 'POST':
         if request.headers['Content-Type'] != 'text/plain':
             abort(400)
@@ -47,20 +51,3 @@ def ussd_callback():
         resp.headers['Content-Type'] = "application/json"
         resp.cache_control.no_cache = True
         return resp
-
-
-def display_menu():
-    menu_text = """CON Africa's-Talking Show and Tell Demo \n
-            1. You're  registered we'll call you and ask you a few questions\n
-            2. You stand a chance to win airtime \n
-            END
-            """
-    return menu_text
-
-
-def ussd_proceed(ussd_text):
-    return "CON %s" % ussd_text
-
-
-def ussd_stop(ussd_text):
-    return "END %s" % ussd_text

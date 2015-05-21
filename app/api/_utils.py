@@ -1,65 +1,7 @@
 __author__ = 'at'
 
 from urllib import urlencode
-from json import loads
-import csv
 import requests
-
-
-class NotFoundException(BaseException):
-    pass
-
-
-class GatewayTimedOut(BaseException):
-    pass
-
-
-class WriteBulkSmsCsv():
-    def __init__(self, json, username, metric='cost'):
-        """
-        :param json
-        :param username
-        :param metric - cost, count
-        :return: csv
-        """
-        self.json = json
-        self.username = username
-        self.metric = metric
-
-    def to_csv(self):
-        file_name = 'exports/' + self.username + 'bulkSMS' + '.csv'
-        fd = open(file_name, "wb")
-        try:
-            writer = csv.writer(fd)
-            if self.metric == 'cost':
-                json = loads(self.json)
-                result = json.get('responses')
-
-                writer.writerow(('# No', 'Date', 'Count'))
-                for index in xrange(len(result.get('networkCostStats'))):
-                    date = result.get('networkCostStats')[index].get('date')
-                    count = result.get('networkCostStats')[index].get('elements').get('Safaricom (Kenya)')
-                    writer.writerow((index, date, count))
-
-            elif self.metric == 'count':
-                json = loads(self.json)
-                result = json.get('responses')
-
-                # TODO: sender id stats, missing stats - pandas
-                for index in xrange(len(result.get('networkCountStats'))):
-                    date = result.get('networkCountStats')[index].get('date')
-                    telecoms = result.get('networkCountStats')[index].get('elements')
-                    count = 0
-                    for t, statCount in telecoms.iteritems():
-                        count += int(statCount)
-
-                    writer.writerow(('# No', 'Date', 'Count'))
-                    writer.writerow((index, date, count))
-
-        except NotFoundException, e:
-            raise e
-        finally:
-            fd.close()
 
 
 class FetchUrl(object):

@@ -25,5 +25,5 @@ username = 'IanJuma'
 # rethink
 rethinkdb_auth = "hackathon2015"
 RDB_HOST = os.environ.get('RDB_HOST') or '127.0.0.1'
-RDB_PORT = os.environ.get('RDB_PORT') or 29015
+RDB_PORT = os.environ.get('RDB_PORT') or 29019
 TARGET_DB = 'octopus'
