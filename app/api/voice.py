@@ -25,12 +25,27 @@ def voice_callback():
         print is_active
         print session_id
 
-        if is_active is 1:
+        if is_active == 0:
             # Compose the response
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
             response += '<GetDigits timeout="20" finishOnKey="#">'
-            response += '<Say>How many people are in the room? end with hash sign</Say>'
+            response += '<Say playBeep="false" >How many people are in the room? end with hash sign</Say>'
+            response += '</GetDigits>'
+            response += '<Say>We did not get your answer. Good bye</Say>'
+            response += '</Response>'
+
+            resp = make_response(response, 200)
+            resp.headers['Content-Type'] = "application/xml"
+            resp.cache_control.no_cache = True
+            return resp
+
+        elif is_active == 1:
+            # Compose the response
+            response = '<?xml version="1.0" encoding="UTF-8"?>'
+            response += '<Response>'
+            response += '<GetDigits timeout="20" finishOnKey="#">'
+            response += '<Say>We\'ll see</Say>'
             response += '</GetDigits>'
             response += '<Say>We did not get your answer. Good bye</Say>'
             response += '</Response>'
@@ -58,7 +73,7 @@ def voice_callback():
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
             response += '<GetDigits timeout="20" finishOnKey="#">'
-            response += '<Say>How many people are in the room? end with hash sign</Say>'
+            response += '<Say playBeep="false" >How many people are in the room? end with hash sign</Say>'
             response += '</GetDigits>'
             response += '<Say>We did not get your answer. Good bye</Say>'
             response += '</Response>'
