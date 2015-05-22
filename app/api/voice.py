@@ -32,6 +32,7 @@ def voice_callback():
             response += '</Response>'
 
             dtmf_digits = request.args.get('dtmfDigits')
+            print(dtmf_digits)
 
             resp = make_response(response, 200)
             resp.headers['Content-Type'] = "application/xml"
