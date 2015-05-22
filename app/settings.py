@@ -8,6 +8,9 @@ CSRF_SESSION_LKEY = 'dev_key_h8asSNJ9s9=+'
 THREADED = False
 ONLINE_LAST_MINUTES = 720
 
+# questions
+questions = {'': 1, '': 2}
+
 # urls
 base_url = 'http://134.213.48.187:8080/'
 bulk_sms_url = 'http://134.213.48.187:8080/bulkSms/sent?'

@@ -47,15 +47,12 @@ def voice_callback():
         if is_active == str(1):
             dtmf_digits = request.values.get('dtmfDigits')
             if dtmf_digits is not None:
-                if dtmf_digits == str(5):
+                if dtmf_digits == str(6):
                     api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
-                    """
                     try:
                         api.sendAirtime([{'phoneNumber': caller_number, 'amount': 'KES 10'}])
                     except AfricasTalkingGatewayException:
                         logging.error('Sending airtime failed')
-                    """
-
 
                     response = '<?xml version="1.0" encoding="UTF-8"?>'
                     response += '<Response>'
@@ -83,7 +80,7 @@ def voice_callback():
                 response = '<?xml version="1.0" encoding="UTF-8"?>'
                 response += '<Response>'
                 response += '<GetDigits timeout="20" finishOnKey="#">'
-                response += '<Say playBeep="false" >How many people are in the room? end with hash sign</Say>'
+                response += '<Say playBeep="false" >How old is Africa\'s Talking? end with hash sign</Say>'
                 response += '</GetDigits>'
                 response += '</Response>'
 
