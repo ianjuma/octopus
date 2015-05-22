@@ -46,18 +46,15 @@ def voice_callback():
             # Compose the response
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
-            response += '<GetDigits timeout="20" finishOnKey="#">'
-            response += '<Say playBeep="false" >How many people are in the room? end with hash sign</Say>'
-            response += '</GetDigits>'
+            response += '<Say>Thank you! Good bye!</Say>'
             response += '</Response>'
-
             """
             dtmf_digits = request.values.get('dtmfDigits')
             print(dtmf_digits)
             if dtmf_digits == 5:
                 api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
                 try:
-                    api.sendAirtime([caller_number])
+                    api.sendAirtime([{'phoneNumber': caller_number, 'amount': 'KES 10'}])
                 except AfricasTalkingGatewayException:
                     logging.error('Sending airtime failed')
             """
@@ -68,21 +65,24 @@ def voice_callback():
             return resp
 
         else:
-            duration = request.values.get('durationInSeconds')
-            currency_code = request.values.get('currencyCode')
-            amount = request.values.get('amount')
+            # duration = request.values.get('durationInSeconds')
+            # currency_code = request.values.get('currencyCode')
+            # amount = request.values.get('amount')
 
-            # Compose the response
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
-            response += '<Say>Thank you! Good bye!</Say>'
+            response += '<GetDigits timeout="20" finishOnKey="#">'
+            response += '<Say playBeep="false" >How many people are in the room? end with hash sign</Say>'
+            response += '</GetDigits>'
             response += '</Response>'
+            """
 
             try:
                 r.table('User').get(caller_number).update({'duration': duration, 'currencyCode': currency_code,
                                                            'sessionId': session_id, 'amount': amount}).run(g.rdb_conn)
             except RqlError:
                 logging.error('Save user call info failed on voice callback')
+            """
 
             resp = make_response(response, 200)
             resp.headers['Content-Type'] = "application/xml"
