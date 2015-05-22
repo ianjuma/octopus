@@ -12,9 +12,7 @@ from app import RqlError
 
 @app.route('/api/voice/callback/', methods=['POST'])
 def voice_callback():
-    print request.method
-    print request.headers['Content-Type']
-    if request.method is 'POST':
+    if request.method == 'POST':
         if request.headers['Content-Type'] != 'application/x-www-form-urlencoded':
             abort(400)
 
