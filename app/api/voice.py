@@ -21,6 +21,7 @@ def voice_callback():
         session_id = request.args.get('sessionId')
         caller_number = request.args.get('callerNumber')
 
+
         if is_active is 1:
             # Compose the response
             response = '<?xml version="1.0" encoding="UTF-8"?>'
