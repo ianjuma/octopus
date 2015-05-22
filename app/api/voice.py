@@ -23,7 +23,7 @@ def voice_callback():
         session_id = request.values.get('sessionId')
         caller_number = request.values.get('callerNumber')
 
-        print is_active
+        print "is_active -> ", is_active
         print caller_number
 
         """
@@ -76,7 +76,6 @@ def voice_callback():
             response += '</GetDigits>'
             response += '</Response>'
             """
-
             try:
                 r.table('User').get(caller_number).update({'duration': duration, 'currencyCode': currency_code,
                                                            'sessionId': session_id, 'amount': amount}).run(g.rdb_conn)
