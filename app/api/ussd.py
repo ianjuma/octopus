@@ -12,15 +12,14 @@ from _utils import consume_call
 @app.route('/api/ussd/callback/', methods=['POST'])
 def ussd_callback():
     if request.method == 'POST':
-        # if request.headers['Content-Type'] != 'text/plain':
-        #    abort(400)
-        print request.values
+        if request.headers['Content-Type'] != 'text/plain':
+            abort(400)
+
         # Reads the variables sent via POST from our gateway
         session_id = request.values.get("sessionId")
         service_code = request.values.get("serviceCode")
         phone_number = request.values.get("phoneNumber")
         text = request.values.get("text")
-        print phone_number
 
         menu_text = """CON Africa's-Talking Show and Tell Demo \n
         - You're  registered we'll call you and ask you a few questions\n
