@@ -22,8 +22,6 @@ def voice_callback():
         is_active = request.values.get('isActive')
         session_id = request.values.get('sessionId')
         caller_number = request.values.get('callerNumber')
-        print is_active
-        print session_id
 
         if is_active == 0:
             # Compose the response
@@ -72,10 +70,7 @@ def voice_callback():
             # Compose the response
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
-            response += '<GetDigits timeout="20" finishOnKey="#">'
-            response += '<Say playBeep="false" >How many people are in the room? end with hash sign</Say>'
-            response += '</GetDigits>'
-            response += '<Say>We did not get your answer. Good bye</Say>'
+            response += '<Say>Thank you! Good bye!</Say>'
             response += '</Response>'
 
             try:
