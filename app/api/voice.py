@@ -49,12 +49,12 @@ def voice_callback():
             if dtmf_digits is not None:
                 if dtmf_digits == str(5):
                     api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
-                    """
+
                     try:
                         api.sendAirtime([{'phoneNumber': caller_number, 'amount': 'KES 10'}])
                     except AfricasTalkingGatewayException:
                         logging.error('Sending airtime failed')
-                    """
+
 
                     response = '<?xml version="1.0" encoding="UTF-8"?>'
                     response += '<Response>'
