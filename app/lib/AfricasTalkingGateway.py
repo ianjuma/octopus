@@ -98,12 +98,15 @@ class AfricasTalkingGateway:
 
         try:
             data = urllib.urlencode(values)
+            print "Im here"
             request = urllib2.Request(
                 self.VoiceUrlString, data, headers=headers)
             response = urllib2.urlopen(request)
+            print "Im here"
             print response
 
         except urllib2.HTTPError as e:
+            print "failed"
             the_page = e.read()
             raise AfricasTalkingGatewayException(the_page)
 
