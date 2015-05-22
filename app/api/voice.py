@@ -17,9 +17,9 @@ def voice_callback():
         if request.headers['Content-Type'] != 'text/plain':
             abort(400)
 
-        is_active = request.args.get('isActive')
-        session_id = request.args.get('sessionId')
-        caller_number = request.args.get('callerNumber')
+        is_active = request.data.get('isActive')
+        session_id = request.data.get('sessionId')
+        caller_number = request.data.get('callerNumber')
 
         if is_active is 1:
             # Compose the response
@@ -31,7 +31,7 @@ def voice_callback():
             response += '<Say>We did not get your answer. Good bye</Say>'
             response += '</Response>'
 
-            dtmf_digits = request.args.get('dtmfDigits')
+            dtmf_digits = request.data.get('dtmfDigits')
             print(dtmf_digits)
 
             resp = make_response(response, 200)
@@ -40,9 +40,9 @@ def voice_callback():
             return resp
 
         else:
-            duration = request.args.get('durationInSeconds')
-            currency_code = request.args.get('currencyCode')
-            amount = request.args.get('amount')
+            duration = request.data.get('durationInSeconds')
+            currency_code = request.data.get('currencyCode')
+            amount = request.data.get('amount')
 
             try:
                 r.table('User').get(caller_number).update({'duration': duration, 'currencyCode': currency_code,

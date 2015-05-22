@@ -11,19 +11,16 @@ from _utils import consume_call
 
 @app.route('/api/ussd/callback/', methods=['POST'])
 def ussd_callback():
-    print request.method
     if request.method == 'POST':
         # if request.headers['Content-Type'] != 'text/plain':
         #    abort(400)
-
+        print request.data
         # Reads the variables sent via POST from our gateway
-        session_id = request.args.get("sessionId")
-        service_code = request.args.get("serviceCode")
-        phone_number = request.args.get("phoneNumber")
-        text = request.args.get("text")
-        print('HERE')
+        session_id = request.data.get("sessionId")
+        service_code = request.data.get("serviceCode")
+        phone_number = request.data.get("phoneNumber")
+        text = request.data.get("text")
         print phone_number
-        print request.method
 
         menu_text = """CON Africa's-Talking Show and Tell Demo \n
         - You're  registered we'll call you and ask you a few questions\n
@@ -31,7 +28,7 @@ def ussd_callback():
         END
         """
 
-        if request.args.get('text') is '':
+        if request.data.get('text') is '':
             # load menu
             menu_text = """CON Africa's-Talking Show and Tell Demo \n
             - You're  registered we'll call you and ask you a few questions\n
