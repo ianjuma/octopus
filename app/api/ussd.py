@@ -23,8 +23,8 @@ def ussd_callback():
         phone_number = request.values.get("phoneNumber")
         text = request.values.get("text")
 
-        menu_text = """END Africa's-Talking Show and Tell. \n
-        You're registered we'll call you and ask you a few questions. You stand a chance to win airtime
+        menu_text = """END Africa's-Talking Show and Tell. \n You're registered we'll call you and ask you a few questions.
+        You stand a chance to win airtime
         """
 
         if request.values.get('text') is '':
