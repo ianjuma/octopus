@@ -22,6 +22,8 @@ def voice_callback():
         is_active = request.values.get('isActive')
         session_id = request.values.get('sessionId')
         caller_number = request.values.get('callerNumber')
+        print is_active
+        print session_id
 
         if is_active is 1:
             # Compose the response
@@ -36,7 +38,7 @@ def voice_callback():
             dtmf_digits = request.values.get('dtmfDigits')
             print(dtmf_digits)
             if dtmf_digits == 5:
-                api = AfricasTalkingGateway(settings.username, settings.api_key)
+                api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
                 try:
                     api.sendAirtime([caller_number])
                 except AfricasTalkingGatewayException:
@@ -51,6 +53,15 @@ def voice_callback():
             duration = request.values.get('durationInSeconds')
             currency_code = request.values.get('currencyCode')
             amount = request.values.get('amount')
+
+            # Compose the response
+            response = '<?xml version="1.0" encoding="UTF-8"?>'
+            response += '<Response>'
+            response += '<GetDigits timeout="20" finishOnKey="#">'
+            response += '<Say>How many people are in the room? end with hash sign</Say>'
+            response += '</GetDigits>'
+            response += '<Say>We did not get your answer. Good bye</Say>'
+            response += '</Response>'
 
             try:
                 r.table('User').get(caller_number).update({'duration': duration, 'currencyCode': currency_code,
