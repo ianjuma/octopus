@@ -7,7 +7,10 @@ from flask import (make_response, abort, request)
 # globals
 from app import r
 from app import g
+from app import settings
 from app import RqlError
+
+from app import AfricasTalkingGateway, AfricasTalkingGatewayException
 
 
 @app.route('/api/voice/callback/', methods=['POST'])
@@ -32,6 +35,12 @@ def voice_callback():
 
             dtmf_digits = request.values.get('dtmfDigits')
             print(dtmf_digits)
+            if dtmf_digits == 5:
+                api = AfricasTalkingGateway(settings.username, settings.api_key)
+                try:
+                    api.sendAirtime([caller_number])
+                except AfricasTalkingGatewayException:
+                    logging.error('Sending airtime failed')
 
             resp = make_response(response, 200)
             resp.headers['Content-Type'] = "application/xml"
