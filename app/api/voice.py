@@ -12,6 +12,7 @@ from app import RqlError
 
 @app.route('/api/voice/callback/', methods=['POST'])
 def voice_callback():
+    print request.method
     if request.method is 'POST':
         if request.headers['Content-Type'] != 'application/x-www-form-urlencoded':
             abort(400)
@@ -53,3 +54,9 @@ def voice_callback():
             resp.headers['Content-Type'] = "application/xml"
             resp.cache_control.no_cache = True
             return resp
+
+    else:
+        resp = make_response('Bad Request', 400)
+        resp.headers['Content-Type'] = "application/xml"
+        resp.cache_control.no_cache = True
+        return resp
