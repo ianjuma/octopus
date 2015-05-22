@@ -50,7 +50,7 @@ class AfricasTalkingGateway:
                       'message': message_,
                       'bulkSMSMode':bulkSMSMode_}
 
-        if not from_ is None :
+        if not from_ is None:
             parameters["from"] = from_
 
         if enqueue_ > 0:
@@ -63,7 +63,7 @@ class AfricasTalkingGateway:
             parameters["linkId"] = linkId_
 
         if not retryDurationInHours_ is None:
-            values["retryDurationInHours"] =  retryDurationInHours_
+            parameters["retryDurationInHours"] = retryDurationInHours_
 
         response = self.sendRequest(self.SMSURLString, parameters)
 
@@ -132,7 +132,7 @@ class AfricasTalkingGateway:
         if self.responseCode == self.HTTP_RESPONSE_OK:
             decoded = json.loads(result)
             return decoded['responses']
-        raise AfricasTalkingGatewayException(response)
+        raise AfricasTalkingGatewayException(result)
 
 
     # Voice methods
@@ -206,7 +206,7 @@ class AfricasTalkingGateway:
         if self.responseCode == self.HTTP_RESPONSE_OK:
             decoded = json.loads(result)
             return decoded['UserData']
-        raise AfricasTalkingGatewayException(response)
+        raise AfricasTalkingGatewayException(result)
 
 
     # HTTP access method
