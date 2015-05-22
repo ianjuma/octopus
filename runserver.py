@@ -9,7 +9,6 @@ if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8000))
     app.config['DEBUG'] = True
     app.config['use_reloader'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/octopus'
     app.config['threaded'] = True
 
     http_server = WSGIServer(('127.0.0.1', port), app)
