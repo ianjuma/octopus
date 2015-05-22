@@ -14,13 +14,13 @@ def ussd_callback():
     if request.method == 'POST':
         # if request.headers['Content-Type'] != 'text/plain':
         #    abort(400)
-        print request.json.get('phoneNumber')
+        print request.data
         # Reads the variables sent via POST from our gateway
-        session_id = request.json.get("sessionId")
-        service_code = request.json.get("serviceCode")
-        phone_number = request.json.get("phoneNumber")
-        text = request.json.get("text")
-        print phone_number
+        #session_id = request.json.get("sessionId")
+        #service_code = request.json.get("serviceCode")
+        #phone_number = request.json.get("phoneNumber")
+        #text = request.json.get("text")
+        #print phone_number
 
         menu_text = """CON Africa's-Talking Show and Tell Demo \n
         - You're  registered we'll call you and ask you a few questions\n
