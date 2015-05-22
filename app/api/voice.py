@@ -26,67 +26,72 @@ def voice_callback():
         print "is_active -> ", is_active
         print caller_number
 
-        """
-        if is_active == 0:
+        if is_active == str(0):
             # Compose the response
-            response = '<?xml version="1.0" encoding="UTF-8"?>'
-            response += '<Response>'
-            response += '<GetDigits timeout="20" finishOnKey="#">'
-            response += '<Say playBeep="false" >How many people are in the room? end with hash sign</Say>'
-            response += '</GetDigits>'
-            response += '</Response>'
 
-            resp = make_response(response, 200)
-            resp.headers['Content-Type'] = "application/xml"
-            resp.cache_control.no_cache = True
-            return resp
-        """
+            duration = request.values.get('durationInSeconds')
+            currency_code = request.values.get('currencyCode')
+            amount = request.values.get('amount')
 
-        if is_active == 1:
-            # Compose the response
-            response = '<?xml version="1.0" encoding="UTF-8"?>'
-            response += '<Response>'
-            response += '<Say>Thank you! Good bye!</Say>'
-            response += '</Response>'
-            """
-            dtmf_digits = request.values.get('dtmfDigits')
-            print(dtmf_digits)
-            if dtmf_digits == 5:
-                api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
-                try:
-                    api.sendAirtime([{'phoneNumber': caller_number, 'amount': 'KES 10'}])
-                except AfricasTalkingGatewayException:
-                    logging.error('Sending airtime failed')
-            """
-
-            resp = make_response(response, 200)
-            resp.headers['Content-Type'] = "application/xml"
-            resp.cache_control.no_cache = True
-            return resp
-
-        else:
-            # duration = request.values.get('durationInSeconds')
-            # currency_code = request.values.get('currencyCode')
-            # amount = request.values.get('amount')
-
-            response = '<?xml version="1.0" encoding="UTF-8"?>'
-            response += '<Response>'
-            response += '<GetDigits timeout="20" finishOnKey="#">'
-            response += '<Say playBeep="false" >How many people are in the room? end with hash sign</Say>'
-            response += '</GetDigits>'
-            response += '</Response>'
-            """
             try:
                 r.table('User').get(caller_number).update({'duration': duration, 'currencyCode': currency_code,
                                                            'sessionId': session_id, 'amount': amount}).run(g.rdb_conn)
             except RqlError:
                 logging.error('Save user call info failed on voice callback')
-            """
 
-            resp = make_response(response, 200)
+            resp = make_response('OK', 200)
             resp.headers['Content-Type'] = "application/xml"
             resp.cache_control.no_cache = True
             return resp
+
+        if is_active == str(1):
+
+            dtmf_digits = request.values.get('dtmfDigits')
+            if dtmf_digits != '':
+                print(dtmf_digits)
+                if dtmf_digits == str(5):
+                    api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
+                    """
+                    try:
+                        api.sendAirtime([{'phoneNumber': caller_number, 'amount': 'KES 10'}])
+                    except AfricasTalkingGatewayException:
+                        logging.error('Sending airtime failed')
+                    """
+
+                    response = '<?xml version="1.0" encoding="UTF-8"?>'
+                    response += '<Response>'
+                    response += '<Say playBeep="false" >You are right, sending you airtime!</Say>'
+                    response += '</Response>'
+
+                    resp = make_response(response, 200)
+                    resp.headers['Content-Type'] = "application/xml"
+                    resp.cache_control.no_cache = True
+                    return resp
+
+                else:
+                    response = '<?xml version="1.0" encoding="UTF-8"?>'
+                    response += '<Response>'
+                    response += '<Say playBeep="false" >You are wrong, sorry!</Say>'
+                    response += '</Response>'
+
+                    resp = make_response(response, 200)
+                    resp.headers['Content-Type'] = "application/xml"
+                    resp.cache_control.no_cache = True
+                    return resp
+
+            else:
+                # Compose the response
+                response = '<?xml version="1.0" encoding="UTF-8"?>'
+                response += '<Response>'
+                response += '<GetDigits timeout="20" finishOnKey="#">'
+                response += '<Say playBeep="false" >How many people are in the room? end with hash sign</Say>'
+                response += '</GetDigits>'
+                response += '</Response>'
+
+                resp = make_response(response, 200)
+                resp.headers['Content-Type'] = "application/xml"
+                resp.cache_control.no_cache = True
+                return resp
 
     else:
         resp = make_response('Bad Request', 400)
