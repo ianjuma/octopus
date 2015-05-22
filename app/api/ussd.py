@@ -47,6 +47,7 @@ def ussd_callback():
                                         'sessionId': session_id, 'text': text}).run(g.rdb_conn)
 
                 # make call
+                print 'making call'
                 consume_call(settings.from_, phone_number)
 
                 resp = make_response(menu_text, 200)

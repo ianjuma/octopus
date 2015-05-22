@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from app import (app, logging)
-from app import AfricasTalkingGateway, AfricasTalkingGatewayException
-from flask import (make_response, abort, request, jsonify)
+from flask import (make_response, abort, request)
 
 # globals
 from app import r
@@ -14,7 +13,7 @@ from app import RqlError
 @app.route('/api/voice/callback/', methods=['POST'])
 def voice_callback():
     if request.method is 'POST':
-        if request.headers['Content-Type'] != 'text/plain':
+        if request.headers['Content-Type'] != 'application/x-www-form-urlencoded':
             abort(400)
 
         is_active = request.values.get('isActive')
@@ -49,3 +48,8 @@ def voice_callback():
                                                            'sessionId': session_id, 'amount': amount}).run(g.rdb_conn)
             except RqlError:
                 logging.error('Save user call info failed on voice callback')
+
+            resp = make_response('OK', 200)
+            resp.headers['Content-Type'] = "application/xml"
+            resp.cache_control.no_cache = True
+            return resp
