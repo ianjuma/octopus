@@ -12,9 +12,8 @@ from _utils import consume_call
 @app.route('/api/ussd/callback/', methods=['POST'])
 def ussd_callback():
     if request.method == 'POST':
-        print request.headers['Content-Type']
-        #if request.headers['Content-Type'] != 'text/plain':
-        #    abort(400)
+        if request.headers['Content-Type'] != 'application/x-www-form-urlencoded':
+            abort(400)
 
         # Reads the variables sent via POST from our gateway
         session_id = request.values.get("sessionId")
@@ -22,17 +21,15 @@ def ussd_callback():
         phone_number = request.values.get("phoneNumber")
         text = request.values.get("text")
 
-        menu_text = """CON Africa's-Talking Show and Tell Demo \n
-        - You're  registered we'll call you and ask you a few questions\n
-        - You stand a chance to win airtime \n
+        menu_text = """CON Africa's-Talking Show and Tell \n
+        - You're registered we'll call you and ask you a few questions. You stand a chance to win airtime
         END
         """
 
         if request.values.get('text') is '':
             # load menu
-            menu_text = """CON Africa's-Talking Show and Tell Demo \n
-            - You're  registered we'll call you and ask you a few questions\n
-            - You stand a chance to win airtime \n
+            menu_text = """CON Africa's-Talking Show and Tell \n
+            - You're registered we'll call you and ask you a few questions. You stand a chance to win airtime
             END
             """
 
@@ -45,7 +42,7 @@ def ussd_callback():
             user = r.table('User').get(phone_number).run(g.rdb_conn)
 
             # no user found so save
-            if user is not None:
+            if user is None:
                 r.table('User').insert({'phoneNumber': phone_number, 'serviceCode': service_code,
                                         'sessionId': session_id, 'text': text}).run(g.rdb_conn)
 
@@ -58,8 +55,8 @@ def ussd_callback():
                 return resp
             else:
                 # user found - can't play
-                toast = """CON Africa's-Talking Show and Tell Demo \n
-                - Sorry you can only play Once \n
+                toast = """CON Africa's Talking Show and Tell \n
+                - Sorry you can only play Once.
                 END
                 """
                 resp = make_response(toast, 200)
