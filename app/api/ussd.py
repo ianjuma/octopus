@@ -23,16 +23,14 @@ def ussd_callback():
         phone_number = request.values.get("phoneNumber")
         text = request.values.get("text")
 
-        menu_text = """CON Africa's-Talking Show and Tell \n
-        - You're registered we'll call you and ask you a few questions. You stand a chance to win airtime
-        END
+        menu_text = """END Africa's-Talking Show and Tell. \n
+        You're registered we'll call you and ask you a few questions. You stand a chance to win airtime
         """
 
         if request.values.get('text') is '':
             # load menu
-            menu_text = """CON Africa's-Talking Show and Tell \n
-            - You're registered we'll call you and ask you a few questions. You stand a chance to win airtime
-            END
+            menu_text = """END Africa's-Talking Show and Tell. \n
+            You're registered we'll call you and ask you a few questions. You stand a chance to win airtime
             """
 
             resp = make_response(menu_text, 200)
@@ -63,9 +61,8 @@ def ussd_callback():
                 return resp
             else:
                 # user found - can't play
-                toast = """CON Africa's Talking Show and Tell \n
-                - Sorry you can only play Once.
-                END
+                toast = """END Africa's Talking Show and Tell. \n
+                Sorry you can only play Once.
                 """
                 resp = make_response(toast, 200)
                 resp.headers['Content-Type'] = "text/plain"
@@ -92,10 +89,9 @@ def ussd_callback():
 
 
 def display_menu():
-    menu_text = """CON Africa's-Talking Show and Tell Demo \n
+    menu_text = """END Africa's-Talking Show and Tell Demo. \n
             1. You're  registered we'll call you and ask you a few questions\n
             2. You stand a chance to win airtime \n
-            END
             """
     return menu_text
 
