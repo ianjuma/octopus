@@ -15,6 +15,8 @@ def ussd_callback():
         # if request.headers['Content-Type'] != 'text/plain':
         #    abort(400)
         print request.data
+        print request.values
+        print request.form
         # Reads the variables sent via POST from our gateway
         #session_id = request.json.get("sessionId")
         #service_code = request.json.get("serviceCode")
