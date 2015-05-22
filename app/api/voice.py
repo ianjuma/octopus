@@ -45,10 +45,8 @@ def voice_callback():
             return resp
 
         if is_active == str(1):
-
             dtmf_digits = request.values.get('dtmfDigits')
-            if dtmf_digits != '':
-                print(dtmf_digits)
+            if dtmf_digits is not None:
                 if dtmf_digits == str(5):
                     api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
                     """
