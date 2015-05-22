@@ -20,6 +20,9 @@ def ussd_callback():
         service_code = request.args.get("serviceCode")
         phone_number = request.args.get("phoneNumber")
         text = request.args.get("text")
+        print('HERE')
+        print phone_number
+        print request.method
 
         menu_text = """CON Africa's-Talking Show and Tell Demo \n
         - You're  registered we'll call you and ask you a few questions\n
