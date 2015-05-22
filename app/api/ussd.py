@@ -11,9 +11,10 @@ from _utils import consume_call
 
 @app.route('/api/ussd/callback/', methods=['POST'])
 def ussd_callback():
+    print request.method
     if request.method == 'POST':
-        if request.headers['Content-Type'] != 'text/plain':
-            abort(400)
+        # if request.headers['Content-Type'] != 'text/plain':
+        #    abort(400)
 
         # Reads the variables sent via POST from our gateway
         session_id = request.args.get("sessionId")
