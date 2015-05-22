@@ -26,6 +26,7 @@ def voice_callback():
         print is_active
         print caller_number
 
+        """
         if is_active == 0:
             # Compose the response
             response = '<?xml version="1.0" encoding="UTF-8"?>'
@@ -39,8 +40,9 @@ def voice_callback():
             resp.headers['Content-Type'] = "application/xml"
             resp.cache_control.no_cache = True
             return resp
+        """
 
-        elif is_active == 1:
+        if is_active == 1:
             # Compose the response
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
@@ -49,6 +51,7 @@ def voice_callback():
             response += '</GetDigits>'
             response += '</Response>'
 
+            """
             dtmf_digits = request.values.get('dtmfDigits')
             print(dtmf_digits)
             if dtmf_digits == 5:
@@ -57,6 +60,7 @@ def voice_callback():
                     api.sendAirtime([caller_number])
                 except AfricasTalkingGatewayException:
                     logging.error('Sending airtime failed')
+            """
 
             resp = make_response(response, 200)
             resp.headers['Content-Type'] = "application/xml"
