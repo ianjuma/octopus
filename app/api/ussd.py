@@ -16,11 +16,11 @@ def ussd_callback():
         #    abort(400)
         print request.values
         # Reads the variables sent via POST from our gateway
-        #session_id = request.json.get("sessionId")
-        #service_code = request.json.get("serviceCode")
-        #phone_number = request.json.get("phoneNumber")
-        #text = request.json.get("text")
-        #print phone_number
+        session_id = request.values.get("sessionId")
+        service_code = request.values.get("serviceCode")
+        phone_number = request.values.get("phoneNumber")
+        text = request.values.get("text")
+        print phone_number
 
         menu_text = """CON Africa's-Talking Show and Tell Demo \n
         - You're  registered we'll call you and ask you a few questions\n
@@ -28,7 +28,7 @@ def ussd_callback():
         END
         """
 
-        if request.json.get('text') is '':
+        if request.values.get('text') is '':
             # load menu
             menu_text = """CON Africa's-Talking Show and Tell Demo \n
             - You're  registered we'll call you and ask you a few questions\n
