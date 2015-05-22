@@ -8,8 +8,6 @@ from app import settings
 
 from app import AfricasTalkingGateway, AfricasTalkingGatewayException
 
-from _utils import consume_call
-
 
 @app.route('/api/ussd/callback/', methods=['POST'])
 def ussd_callback():
@@ -23,15 +21,15 @@ def ussd_callback():
         phone_number = request.values.get("phoneNumber")
         text = request.values.get("text")
 
-        menu_text = """END Africa's-Talking Show and Tell. \n You're registered we'll call you and ask you a few questions.
-        You stand a chance to win airtime
-        """
+        menu_text = "END Africa's-Talking Show and Tell.\n"
+        menu_text += "You're registered we'll call you and ask you a few questions."
+        menu_text += "You stand a chance to win airtime"
 
         if request.values.get('text') is '':
             # load menu
-            menu_text = """END Africa's-Talking Show and Tell. \n
-            You're registered we'll call you and ask you a few questions. You stand a chance to win airtime
-            """
+            menu_text = "END Africa's-Talking Show and Tell.\n"
+            menu_text += "You're registered we'll call you and ask you a few questions."
+            menu_text += "You stand a chance to win airtime"
 
             resp = make_response(menu_text, 200)
             resp.headers['Content-Type'] = "text/plain"
@@ -61,9 +59,9 @@ def ussd_callback():
                 return resp
             else:
                 # user found - can't play
-                toast = """END Africa's Talking Show and Tell. \n
-                Sorry you can only play Once.
-                """
+                toast = "END Africa's Talking Show and Tell. \n"
+                toast += "Sorry you can only play Once."
+
                 resp = make_response(toast, 200)
                 resp.headers['Content-Type'] = "text/plain"
                 resp.cache_control.no_cache = True
