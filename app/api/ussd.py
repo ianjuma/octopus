@@ -6,6 +6,8 @@ from app import g
 from app import RqlError
 from app import settings
 
+from app import AfricasTalkingGateway
+
 from _utils import consume_call
 
 
@@ -48,7 +50,9 @@ def ussd_callback():
 
                 # make call
                 print 'making call'
-                consume_call(settings.from_, phone_number)
+                # consume_call(settings.from_, phone_number)
+                api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
+                api.call(settings.from_, phone_number)
 
                 resp = make_response(menu_text, 200)
                 resp.headers['Content-Type'] = "text/plain"
