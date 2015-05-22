@@ -69,7 +69,7 @@ def voice_callback():
             except RqlError:
                 logging.error('Save user call info failed on voice callback')
 
-            resp = make_response('OK', 200)
+            resp = make_response(response, 200)
             resp.headers['Content-Type'] = "application/xml"
             resp.cache_control.no_cache = True
             return resp
