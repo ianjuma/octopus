@@ -47,10 +47,10 @@ def ussd_callback():
                                         'sessionId': session_id, 'text': text}).run(g.rdb_conn)
 
                 # make call
-                print 'making call'
                 # consume_call(settings.from_, phone_number)
                 api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
                 try:
+                    print 'making call'
                     api.call(settings.from_, phone_number)
                 except AfricasTalkingGatewayException:
                     logging.warning("call init failed")

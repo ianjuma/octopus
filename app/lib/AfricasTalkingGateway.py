@@ -142,11 +142,12 @@ class AfricasTalkingGateway:
         'from'     : from_,'to': to_
         }
         url = "%s/call" %(self.VoiceURLString)
+        print "Call library"
 
         response = self.sendRequest(url, parameters)
         decoded = json.loads(response)
         if decoded['Status'] != "Success":
-            raise AfricasTalkingGatewayException(decoded['ErrorMessage'])
+            raise AfricasTalkingGatewayException(decoded['errorMessage'])
 
 
     def getNumQueuedCalls(self, phoneNumbers_, queueName_ = None):
