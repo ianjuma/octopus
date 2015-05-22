@@ -101,6 +101,7 @@ class AfricasTalkingGateway:
             request = urllib2.Request(
                 self.VoiceUrlString, data, headers=headers)
             response = urllib2.urlopen(request)
+            print response
 
         except urllib2.HTTPError as e:
             the_page = e.read()
