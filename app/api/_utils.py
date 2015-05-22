@@ -72,7 +72,7 @@ class MakeRequests(object):
             return r
 
 
-@job('high', connection=redis_conn, timeout=5)
+# @job('high', connection=redis_conn, timeout=5)
 def consume_call(from_, to):
     api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
     try:
