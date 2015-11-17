@@ -8,3 +8,4 @@ nose==1.3.0
 gevent==1.0.1
 gunicorn==19.0.0
 simplejson==3.6.2
+wit

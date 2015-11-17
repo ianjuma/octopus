@@ -6,7 +6,7 @@ monkey.patch_all()
 from app import app
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("PORT", 8005))
     app.config['DEBUG'] = True
     app.config['use_reloader'] = True
     app.config['threaded'] = True
