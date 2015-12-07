@@ -2,11 +2,6 @@
 __version__ = '0.1'
 
 from flask import Flask
-from flask import g
-from flask import abort
-
-import rethinkdb as r
-from rethinkdb import (RqlRuntimeError, RqlDriverError, RqlError)
 
 from lib.AfricasTalkingGateway import (
     AfricasTalkingGateway, AfricasTalkingGatewayException)
@@ -27,7 +22,7 @@ app.secret_key = settings.SECRET_KEY
 app.permanent_session_lifetime = timedelta(minutes=5760)
 logging.basicConfig(filename='octopus.log', level=logging.DEBUG)
 
-
+"""
 def db_setup():
     connection = r.connect(host=settings.RDB_HOST, port=settings.RDB_PORT,
                            auth_key=settings.rethinkdb_auth)
@@ -63,6 +58,7 @@ def teardown_request(exception):
     except AttributeError:
         logging.info('Database failure - check your connection', exception)
 
+"""
 
 from api import routes
 from api import voice

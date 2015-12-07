@@ -1,6 +1,5 @@
-from app import (app, logging)
-from flask import (abort, request, make_response, jsonify)
-from app import settings
+from app import app
+from flask import (abort, request, make_response)
 
 
 @app.route('/api/shortcode/callback/', methods=['POST'])

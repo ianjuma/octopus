@@ -5,10 +5,7 @@ from app import (app, logging)
 from flask import (make_response, abort, request)
 
 # globals
-from app import r
-from app import g
 from app import settings
-from app import RqlError
 
 from app import AfricasTalkingGateway, AfricasTalkingGatewayException
 
@@ -32,12 +29,6 @@ def voice_callback():
             duration = request.values.get('durationInSeconds')
             currency_code = request.values.get('currencyCode')
             amount = request.values.get('amount')
-
-            try:
-                r.table('User').get(caller_number).update({'duration': duration, 'currencyCode': currency_code,
-                                                           'sessionId': session_id, 'amount': amount}).run(g.rdb_conn)
-            except RqlError:
-                logging.error('Save user call info failed on voice callback')
 
             resp = make_response('OK', 200)
             resp.headers['Content-Type'] = "application/xml"

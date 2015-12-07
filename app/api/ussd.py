@@ -1,12 +1,5 @@
-from app import (app, logging)
-from flask import (abort, request, make_response, jsonify)
-
-from app import r
-from app import g
-from app import RqlError
-from app import settings
-
-from app import AfricasTalkingGateway, AfricasTalkingGatewayException
+from app import app
+from flask import (abort, request, make_response)
 
 
 @app.route('/api/ussd/callback/', methods=['POST'])
@@ -33,45 +26,6 @@ def ussd_callback():
 
             resp = make_response(menu_text, 200)
             resp.headers['Content-Type'] = "text/plain"
-            resp.cache_control.no_cache = True
-            return resp
-
-        try:
-            user = r.table('User').get(phone_number).run(g.rdb_conn)
-
-            # no user found so save
-            if user is None:
-                r.table('User').insert({'phoneNumber': phone_number, 'serviceCode': service_code,
-                                        'sessionId': session_id, 'text': text}).run(g.rdb_conn)
-
-                # make call
-                # consume_call(settings.from_, phone_number)
-                api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
-                try:
-                    print 'making call'
-                    api.call(settings.from_, phone_number)
-                except AfricasTalkingGatewayException:
-                    logging.warning("call init failed")
-
-                resp = make_response(menu_text, 200)
-                resp.headers['Content-Type'] = "text/plain"
-                resp.cache_control.no_cache = True
-                return resp
-            else:
-                # user found - can't play
-                toast = "END Africa's Talking Show and Tell. \n"
-                toast += "Sorry you can only play Once."
-
-                resp = make_response(toast, 200)
-                resp.headers['Content-Type'] = "text/plain"
-                resp.cache_control.no_cache = True
-                return resp
-
-        except RqlError:
-            logging.warning('DB code verify failed on /api/ussd/ - > callback')
-
-            resp = make_response(jsonify({"Error": "503 DB error"}), 503)
-            resp.headers['Content-Type'] = "application/json"
             resp.cache_control.no_cache = True
             return resp
 
