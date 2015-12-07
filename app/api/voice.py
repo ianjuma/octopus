@@ -13,9 +13,6 @@ from app import AfricasTalkingGateway, AfricasTalkingGatewayException
 @app.route('/api/voice/callback/', methods=['POST'])
 def voice_callback():
     if request.method == 'POST':
-        if request.headers['Content-Type'] != 'application/x-www-form-urlencoded':
-            abort(400)
-
         is_active = request.values.get('isActive')
         session_id = request.values.get('sessionId')
         caller_number = request.values.get('callerNumber')
@@ -30,7 +27,12 @@ def voice_callback():
             currency_code = request.values.get('currencyCode')
             amount = request.values.get('amount')
 
-            resp = make_response('OK', 200)
+            response = '<?xml version="1.0" encoding="UTF-8"?>'
+            response += '<Response>'
+            response += '<Say playBeep="false" >You are right, sending you airtime!</Say>'
+            response += '</Response>'
+
+            resp = make_response(response, 200)
             resp.headers['Content-Type'] = "application/xml"
             resp.cache_control.no_cache = True
             return resp
