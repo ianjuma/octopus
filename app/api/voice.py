@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from app import (app, logging)
-from flask import (make_response, abort, request)
+from flask import (make_response, request)
 
 # globals
 from app import settings
