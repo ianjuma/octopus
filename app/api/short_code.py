@@ -13,8 +13,10 @@ def short_code_callback():
         to = request.values.get('to')
         text = request.values.get('text')
         date = request.values.get('date')
+        id_ = request.values.get('id')
+        link_id = request.values.get('linkId')
 
-        print _from, to, text, date
+        print _from, to, text, date, id_, link_id
     else:
         resp = make_response('Error', 400)
         resp.headers['Content-Type'] = 'text/plain'
