@@ -9,10 +9,10 @@ def ussd_callback():
             abort(400)
 
         # Reads the variables sent via POST from our gateway
-        session_id = request.values.get("sessionId")
-        service_code = request.values.get("serviceCode")
-        phone_number = request.values.get("phoneNumber")
-        text = request.values.get("text")
+        session_id = request.values.get("sessionId", None)
+        service_code = request.values.get("serviceCode", None)
+        phone_number = request.values.get("phoneNumber", None)
+        text = request.values.get("text", None)
 
         menu_text = "END Africa's-Talking Show and Tell.\n"
         menu_text += "You're registered we'll call you and ask you a few questions."

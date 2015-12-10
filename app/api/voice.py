@@ -13,9 +13,9 @@ from app import AfricasTalkingGateway, AfricasTalkingGatewayException
 @app.route('/api/voice/callback/', methods=['POST'])
 def voice_callback():
     if request.method == 'POST':
-        is_active = request.values.get('isActive')
-        session_id = request.values.get('sessionId')
-        caller_number = request.values.get('callerNumber')
+        is_active = request.values.get('isActive', None)
+        session_id = request.values.get('sessionId', None)
+        caller_number = request.values.get('callerNumber', None)
 
         print "is_active -> ", is_active
         print caller_number
@@ -23,9 +23,9 @@ def voice_callback():
         if is_active == str(0):
             # Compose the response
 
-            duration = request.values.get('durationInSeconds')
-            currency_code = request.values.get('currencyCode')
-            amount = request.values.get('amount')
+            duration = request.values.get('durationInSeconds', None)
+            currency_code = request.values.get('currencyCode', None)
+            amount = request.values.get('amount', None)
 
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
@@ -38,7 +38,7 @@ def voice_callback():
             return resp
 
         if is_active == str(1):
-            dtmf_digits = request.values.get('dtmfDigits')
+            dtmf_digits = request.values.get('dtmfDigits', None)
             if dtmf_digits is not None:
                 if dtmf_digits == str(6):
                     api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
