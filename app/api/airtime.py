@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from app import app, logging
 from flask import (request, make_response)
 

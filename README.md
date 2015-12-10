@@ -8,6 +8,10 @@
 - Call number - to thank subscribers
 - Message the number
 
+OR
+
+- Voice command recorded and pushed to WIT then airtime sent based on answer?
+
 
 #### Why Redis?
 
@@ -34,7 +38,9 @@
 
 ### Flask and REST anti-patterns?
 
+- Don't JUST copy paste shit and expect it to work!
 - I don't care much!
+- Use a .env for your app TOKENS! Don't push them to git.
 - Don't use flask globals (avoid binding g to the req context)
 - It's not RESTful but it works :P
 - way too many if's

@@ -17,15 +17,23 @@ def voice_callback():
         session_id = request.values.get('sessionId', None)
         caller_number = request.values.get('callerNumber', None)
 
+        try:
+            # store session info
+            pass
+        except Exception as e:
+            logging.error('Storing fail -> ', e)
+
         print "is_active -> ", is_active
-        print caller_number
+        print caller_number, session_id
 
         if is_active == str(0):
             # Compose the response
-
             duration = request.values.get('durationInSeconds', None)
             currency_code = request.values.get('currencyCode', None)
             amount = request.values.get('amount', None)
+            # update session info to Redis
+
+            print duration, currency_code, amount
 
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
