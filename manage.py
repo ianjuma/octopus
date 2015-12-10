@@ -9,12 +9,17 @@ from flask.ext.migrate import Migrate, MigrateCommand
 from app import app
 
 
+def push_to_server():
+    # just use git hooks already
+    pass
+
+
 def background_task(instance):
     # gunicorn -c config_gunicorn.py instance:app
     pass
 
 
-def run(instance):
+def runserver(instance):
     port = int(os.environ.get("PORT", 8001))
     instance.config['DEBUG'] = True
     instance.config['use_reloader'] = True
@@ -26,4 +31,6 @@ def run(instance):
 
 
 if __name__ == '__main__':
-    run(app)
+    manager = Manager()
+    manager.run(commands=None)
+    # run(app)

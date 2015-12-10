@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from app import app
+from app import app, logging
 from flask import (request, make_response)
 
 
@@ -16,6 +16,12 @@ def short_code_callback():
         date = request.values.get('date', None)
         id_ = request.values.get('id', None)
         link_id = request.values.get('linkId', None)
+
+        try:
+            # persist session variable
+            pass
+        except Exception as e:
+            logging.error('Failed with - ', e)
 
         print _from, to, text, date, id_, link_id
 

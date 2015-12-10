@@ -9,25 +9,18 @@ THREADED = False
 ONLINE_LAST_MINUTES = 720
 
 # questions
-questions = {'': 1, '': 2}
-
-# urls
-base_url = 'http://134.213.48.187:8080/'
-bulk_sms_url = 'http://134.213.48.187:8080/bulkSms/sent?'
-ussd_url = 'http://134.213.48.187:8080/ussd/hop/success?'
+questions = {1: 'What is the meaning of life?', 2: ''}
 
 # redis
 redis_broker = 'redis://localhost:6379/0'
 
-
 # api key
 api_key = '733ed38f63b039090a0001dbbc2dd416187f054d53650d0fd7c0b834a293a30d'
 username = 'IanJuma'
-from_ = '+254711082306'
+from_ = '+254711082306'  # AT number
 
-
-# rethink
-rethinkdb_auth = "hackathon2015"
-RDB_HOST = os.environ.get('RDB_HOST') or '127.0.0.1'
-RDB_PORT = os.environ.get('RDB_PORT') or 29019
+# Database
+db_auth = "hackathon2015"
+DB_HOST = os.environ.get('RDB_HOST') or '127.0.0.1'
+DB_PORT = os.environ.get('RDB_PORT') or 3306
 TARGET_DB = 'octopus'
