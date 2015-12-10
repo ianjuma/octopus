@@ -1,4 +1,4 @@
-from app import app
+from app import app, logging
 from flask import (request, make_response)
 
 
@@ -12,6 +12,11 @@ def airtime_dlr_callback():
         id_ = request.values.get('text', None)
 
         print id_, _from, to
+        try:
+            # write to redis
+            pass
+        except Exception as e:
+            logging.error('Storing fail -> ', e)
 
         resp = make_response('Ok', 200)
         resp.headers['Content-Type'] = 'application/json'
