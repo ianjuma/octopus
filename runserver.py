@@ -11,7 +11,7 @@ if __name__ == '__main__':
     app.config['use_reloader'] = True
     app.config['threaded'] = True
 
-    # http_server = WSGIServer(('127.0.0.1', port), app)
-    # http_server.serve_forever()
-    app.run(port=port, host='0.0.0.0')
+    http_server = WSGIServer(('127.0.0.1', port), app)
+    http_server.serve_forever()
+    # app.run(port=port, host='0.0.0.0')
     # this can be omitted if using gevent wrapped around gunicorn
