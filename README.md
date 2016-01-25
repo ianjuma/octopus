@@ -36,13 +36,7 @@ OR
 - /api/messaging/dlr/callback/
 
 
-### Flask and REST anti-patterns?
+### Flask
 
-- Don't JUST copy paste shit and expect it to work!
-- I don't care much!
 - Use a .env for your app TOKENS! Don't push them to git.
 - Don't use flask globals (avoid binding g to the req context)
-- It's not RESTful but it works :P
-- way too many if's
-- MV* - Man, I got tired! Open to pull requests
-- Patterns, patters, patterns. It works.
