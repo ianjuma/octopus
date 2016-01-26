@@ -11,6 +11,7 @@ from rq.decorators import job
 from redis import Redis
 
 redis_conn = Redis()
+from app.lib.witty import ask_wit
 
 
 class FetchUrl(object):
@@ -72,10 +73,23 @@ class MakeRequests(object):
             return r
 
 
-# @job('high', connection=redis_conn, timeout=5)
+@job('high', connection=redis_conn, timeout=5)
 def consume_call(from_, to):
     api = AfricasTalkingGateway(apiKey_=settings.api_key, username_=settings.username)
     try:
         api.call(from_, to)
     except AfricasTalkingGatewayException:
         logging.warning("call init failed")
+
+
+@job('high', connection=redis_conn, timeout=5)
+def get_witty_intent(text):
+    try:
+        intent = ask_wit(text)
+        # pull game info (game info for scores and results)
+        return intent
+    except Exception as e:
+        logging.error("call init failed", e)
+
+
+# send_message job

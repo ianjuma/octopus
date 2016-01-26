@@ -19,6 +19,7 @@ def short_code_callback():
 
         try:
             # persist session variable
+            # pass to queue
             pass
         except Exception as e:
             logging.error('Failed with - ', e)
