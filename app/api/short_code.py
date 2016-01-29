@@ -87,7 +87,7 @@ def short_code_callback():
 
             if json.get('outcomes')[0].get('intent') == 'next_match':
                 # team_name = json.get('outcomes')[0]['entities']['team'][0]['value']
-                result = Football.get_next_match(team_name)
+                result = Football.get_next_match(team_name='Arsenal')
                 send_message(_from, result)
 
         except Exception as e:
