@@ -84,10 +84,12 @@ def short_code_callback():
             intent = get_witty_intent(text=text)
             print intent.get('outcomes')[0].get('intent')
 
+            """
             if intent.get('outcomes')[0].get('intent') == 'next_match':
                 team_name = intent.get('outcomes')[0]['entities']['team'][0]['value']
                 result = Football.get_next_match(team_name)
                 send_message(_from, result)
+            """
 
         except Exception as e:
             logging.error('Failed with - ', e)
