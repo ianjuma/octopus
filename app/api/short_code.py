@@ -83,7 +83,7 @@ def short_code_callback():
             # pass to queue
             intent = get_witty_intent(text=text)
             print intent
-            print json.get('outcomes')[0].get('intent')
+            # print json.get('outcomes')[0].get('intent')
 
             """
             if json.get('outcomes')[0].get('intent') == 'next_match':
