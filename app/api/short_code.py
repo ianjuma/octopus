@@ -85,10 +85,12 @@ def short_code_callback():
             print intent
             print json.get('outcomes')[0].get('intent')
 
+            """
             if json.get('outcomes')[0].get('intent') == 'next_match':
                 # team_name = json.get('outcomes')[0]['entities']['team'][0]['value']
                 result = Football.get_next_match(team_name='Arsenal')
                 send_message(_from, result)
+            """
 
         except Exception as e:
             logging.error('Failed with - ', e)
