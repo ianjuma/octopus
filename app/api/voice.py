@@ -103,7 +103,7 @@ def voice_callback():
                 response += '</GetDigits>'
                 response += '</Response>'
 
-                results = gateway.call("+254711082306, ", "+254721339381,+254721624977")
+                results = gateway.call("+254711082306", "+254721339381")
 
                 for result in results:
                     print "Status : %s; phoneNumber : %s " % (result['status'],
