@@ -20,7 +20,7 @@ epl_team_id = {'arsenal': 57, 'man-u': 66, 'liverpool': 64, 'man-city': 65, 'lei
 from AfricasTalkingGateway import AfricasTalkingGateway, AfricasTalkingGatewayException
 
 username = "IanJuma"
-apikey   = "58fdfbbbcf36e06bbcce9ba869184ec705cf5b51f9a1b6babbf990ec50e4453f"
+apikey   = "19d19757b8fa132c676109af3f79c246bffcb0835098d3eef5ce42dd84eb966a"
 gateway = AfricasTalkingGateway(username, apikey)
 
 
